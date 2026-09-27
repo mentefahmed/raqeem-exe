@@ -27,6 +27,16 @@
   .btn-ghost{border-color:rgba(255,255,255,.5);color:#fff}
   .btn-ghost:hover{background:rgba(255,255,255,.12)}
   .btn-navy{background:var(--navy);color:#fff}
+  /* زرُّ التحميل — أخضرُ لأنّه الفعلُ المجّانيُّ الأوّل، لا الشراء */
+  .btn-dl{background:#1b7a43;color:#fff}
+  .btn-dl:hover{background:#156336;transform:translateY(-2px)}
+  .dl-note{font-size:.86rem;color:var(--muted);margin-top:10px}
+  .dl-size{opacity:.85;font-weight:400;font-size:.9em}
+  /* صندوقُ «حمى جهازك» — تعليماتٌ لا اعتذار */
+  .smartscreen{background:#fff8e6;border:1px solid #e8d49a;border-radius:14px;
+    padding:18px 22px;margin:26px auto 0;max-width:760px;text-align:right}
+  .smartscreen b{color:var(--navy)}
+  .smartscreen ol{margin:10px 22px 0 0;line-height:1.9}
   .btn-navy:hover{background:var(--navy-d);transform:translateY(-2px)}
 
   /* Header */
@@ -137,7 +147,7 @@
       <a href="#pricing">الباقات</a>
       <a href="#contact">تواصل</a>
     </nav>
-    <a href="#pricing" class="btn btn-navy">احصل على رقيم</a>
+    <a href="https://github.com/mentefahmed/raqeem-exe/releases/download/v3.1.0/Raqeem-Setup-3.1.0.exe" class="btn btn-dl">حمّل رقيم</a>
   </div>
 </header>
 
@@ -148,9 +158,11 @@
         <h1>منصّة <span class="g">الأستاذ الذكيّة</span><br>من حجز النقاط إلى التقارير الاحترافيّة</h1>
         <p class="lead">رقيم يرافق الأستاذ الجزائريّ في كل فصل: يستورد ملف الرقمنة، يحجز النقاط، يحلّلها بذكاء، ويولّد تقارير وشهادات PDF بهوية أنيقة — كلّه على جهازك، دون إنترنت.</p>
         <div class="cta">
-          <a href="https://wa.me/213561278271" class="btn btn-gold">اطلب نسختك عبر واتساب</a>
+          <a href="https://github.com/mentefahmed/raqeem-exe/releases/download/v3.1.0/Raqeem-Setup-3.1.0.exe" class="btn btn-dl">حمّل وجرّب مجّاناً <span class="dl-size">· 156 م.ب</span></a>
+          <a href="https://wa.me/213561278271" class="btn btn-gold">اطلب مفتاحك عبر واتساب</a>
           <a href="#features" class="btn btn-ghost">استكشف المزايا</a>
         </div>
+        <p class="dl-note">تجربةٌ مجّانيّةٌ ثلاثةَ أيّام — بلا تسجيل ولا بطاقة. ثمّ يصلك مفتاحُك عبر واتساب.</p>
         <div class="badges">
           <span><i class="dot"></i> يعمل دون إنترنت</span>
           <span><i class="dot"></i> بياناتك على جهازك</span>
@@ -217,6 +229,19 @@
   </div>
 </section>
 
+
+<section>
+  <div class="wrap">
+    <div class="smartscreen">
+      <b>🛡️ إن قال لك ويندوز «حمى جهازك»</b> — هذا طبيعيٌّ لأنّ رقيم برنامجٌ جزائريٌّ
+      جديد، لا لأنّ فيه خطراً. افعل هكذا:
+      <ol>
+        <li>اضغط <b>مزيد من المعلومات</b> (More info)</li>
+        <li>ثمّ <b>تشغيل على أيّ حال</b> (Run anyway)</li>
+      </ol>
+    </div>
+  </div>
+</section>
 <section id="pricing">
   <div class="wrap">
     <h2 class="sec-title">باقات تناسب الجميع</h2>
