@@ -32,7 +32,7 @@
   .btn-dl:hover{background:#156336;transform:translateY(-2px)}
   .dl-note{font-size:.86rem;color:var(--muted);margin-top:10px}
   .dl-size{opacity:.85;font-weight:400;font-size:.9em}
-  /* صندوقُ «حمى جهازك» — تعليماتٌ لا اعتذار */
+  /* صندوقُ التنبيهين (المتصفّح ثمّ «حمى جهازك») — تعليماتٌ لا اعتذار */
   .smartscreen{background:#fff8e6;border:1px solid #e8d49a;border-radius:14px;
     padding:18px 22px;margin:26px auto 0;max-width:760px;text-align:right}
   .smartscreen b{color:var(--navy)}
@@ -45,6 +45,9 @@
      ضيق الهاتف تقاطعت أجزاؤه. وشكلُ الزرّ لأنّه اسمُ زرٍّ سيراه. */
   .smartscreen .ss-lang bdi{display:inline-block;margin:3px 0 3px .5em;padding:0 .45em;
     background:#fff;border:1px solid #e8d49a;border-radius:6px}
+  /* مرحلتان بترتيب ما يلقاه الأستاذ: المتصفّحُ عند التحميل، ثمّ ويندوز عند التشغيل */
+  .smartscreen .ss-step{font-weight:700;color:var(--navy);margin-top:14px}
+  .smartscreen .ss-next{border-top:1px dashed #e8d49a;padding-top:14px;margin-top:16px}
   .btn-navy:hover{background:var(--navy-d);transform:translateY(-2px)}
 
   /* Header */
@@ -241,8 +244,24 @@
 <section>
   <div class="wrap">
     <div class="smartscreen">
-      <b>🛡️ إن قال لك ويندوز «حمى جهازك»</b> — هذا طبيعيٌّ لأنّ رقيم برنامجٌ جزائريٌّ
-      جديد، لا لأنّ فيه خطراً. افعل هكذا:
+      <b>🛡️ تنبيهان طبيعيّان عند تثبيت رقيم</b> — لأنّه برنامجٌ جزائريٌّ جديد، لا لأنّ
+      فيه خطراً. تتجاوز كلّاً منهما في خطوتين:
+
+      <div class="ss-step">① عند التحميل: المتصفّح ينبّهك أنّ الملفّ غيرُ شائع</div>
+      <div class="ss-lang">في متصفّح Edge تقرأ:
+        <bdi dir="ltr">isn't commonly downloaded</bdi>
+        <bdi dir="ltr">n'est pas fréquemment téléchargé</bdi></div>
+      <ol>
+        <li>اضغط <b>النقاط الثلاث</b> بجانب الملفّ، ثمّ اختر <b>الاحتفاظ</b>
+          <span class="ss-lang"><bdi dir="ltr">Keep</bdi>
+            <bdi dir="ltr">Conserver</bdi></span></li>
+        <li>اضغط <b>السهم الصغير</b> بجانب زرّ الحذف، ثمّ اختر <b>الاحتفاظ على أيّ حال</b>
+          <span class="ss-lang"><bdi dir="ltr">Keep anyway</bdi>
+            <bdi dir="ltr">Conserver quand même</bdi></span></li>
+      </ol>
+      <div class="ss-lang">وفي المتصفّحات الأخرى اختر ما معناه «الاحتفاظ بالملفّ».</div>
+
+      <div class="ss-step ss-next">② عند التشغيل: ويندوز يقول «حمى جهازك»</div>
       <div class="ss-lang">وفي ويندوز بالإنجليزيّة أو الفرنسيّة تقرأ:
         <bdi dir="ltr">Windows protected your PC</bdi>
         <bdi dir="ltr">Windows a protégé votre ordinateur</bdi></div>
