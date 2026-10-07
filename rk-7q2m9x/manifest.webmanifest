@@ -1,0 +1,16 @@
+{
+  "name": "مفاتيح رقيم",
+  "short_name": "مفاتيح رقيم",
+  "description": "مفاتيح التفعيل ورموز كلمة المرور لرقيم — تعمل بلا إنترنت.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1E2148",
+  "theme_color": "#5359A7",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

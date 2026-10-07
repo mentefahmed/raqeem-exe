@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#5359A7">
+<title>مفاتيح رقيم</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<!-- مفاتيح رقيم على الهاتف (بناء 879). ⛔ لا سرَّ في هذه الصفحة: مفتاحُ
+     التوقيع يُستورَد على الهاتف ويُحفَظ فيه مشفَّراً بكلمة السرّ، ولا يغادره. -->
+<style>
+  :root {
+    --bg: #F4F3FA; --card: #FFFFFF; --ink: #1E2148; --muted: #5F6386;
+    --line: #DCDCEB; --primary: #5359A7; --primary-ink: #FFFFFF;
+    --gold: #C49838; --ok: #1F7A4D; --bad: #B3261E; --field: #FAFAFE;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12142B; --card: #1C1F3D; --ink: #ECEDF8; --muted: #A9ACCB;
+      --line: #2F3360; --primary: #7B80CF; --primary-ink: #0E1026;
+      --gold: #D9B25A; --ok: #5BC48E; --bad: #FF8A80; --field: #161936;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: system-ui, "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+    font-size: 17px; line-height: 1.6;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  }
+  main { max-width: 520px; margin: 0 auto; }
+  header { display: flex; align-items: center; gap: 12px; margin: 4px 0 18px; }
+  header img { width: 44px; height: 44px; border-radius: 12px; }
+  header h1 { font-size: 22px; margin: 0; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 18px 16px; margin-bottom: 14px;
+  }
+  h2 { font-size: 18px; margin: 0 0 10px; }
+  ol { margin: 0 0 12px; padding-inline-start: 22px; color: var(--muted); }
+  ol li { margin-bottom: 6px; }
+  label { display: block; font-weight: 600; margin: 12px 0 6px; }
+  .hint { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+  input[type=text], input[type=password], input[type=date] {
+    width: 100%; font-size: 18px; padding: 12px 14px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--field); color: var(--ink);
+  }
+  input.ltr, .ltr { direction: ltr; text-align: left; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; }
+  input[type=file] { width: 100%; font-size: 16px; color: var(--muted); }
+  button {
+    font: inherit; font-weight: 700; border: 0; border-radius: 12px; cursor: pointer;
+    padding: 13px 16px; min-height: 48px;
+  }
+  button.primary { width: 100%; background: var(--primary); color: var(--primary-ink); margin-top: 16px; }
+  button.quiet { background: transparent; color: var(--primary); border: 1px solid var(--line); }
+  button.danger { background: transparent; color: var(--bad); border: 1px solid var(--line); }
+  button:disabled { opacity: .55; cursor: default; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > button { flex: 1 1 0; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .tabs button { flex: 1; background: var(--card); color: var(--muted); border: 1px solid var(--line); }
+  .tabs button[aria-selected=true] { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+  .choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .choices button { background: var(--field); color: var(--ink); border: 1px solid var(--line); font-weight: 600; }
+  .choices button[aria-pressed=true] { border: 2px solid var(--primary); color: var(--primary); }
+  .result { border: 2px solid var(--gold); }
+  .result .code { font-size: 15px; word-break: break-all; background: var(--field); padding: 12px; border-radius: 10px; margin: 8px 0; user-select: all; }
+  .status { min-height: 1.6em; font-weight: 600; margin: 10px 0 0; }
+  .status.ok { color: var(--ok); }
+  .status.bad { color: var(--bad); }
+  .foot { color: var(--muted); font-size: 13px; text-align: center; margin-top: 18px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon-192.png" alt="">
+    <div>
+      <h1>مفاتيح رقيم</h1>
+      <p>مفاتيحُ التفعيل ورموزُ كلمة المرور — من هاتفك</p>
+    </div>
+  </header>
+
+  <!-- 1) أوّلُ مرّة: استيرادُ ملفّ التوقيع وقفلُه بكلمة سرّ -->
+  <section id="setup" class="card" hidden>
+    <h2>أوّلَ مرّةٍ على هذا الهاتف</h2>
+    <ol>
+      <li>انقل ملفَّ التوقيع (‎.json‎) من مجلّد tools في حاسوبك إلى الهاتف <strong>بكابل USB</strong> — لا عبر واتساب ولا تيليجرام ولا Drive.</li>
+      <li>اختره هنا، ثمّ اختر كلمةَ سرٍّ قويّة.</li>
+      <li>بعد الحفظ <strong>احذف الملفَّ من ذاكرة الهاتف</strong>: تبقى نسختُه المشفَّرة هنا وحدها.</li>
+    </ol>
+    <label for="seed-file">ملفّ التوقيع</label>
+    <input id="seed-file" type="file" accept=".json,application/json">
+    <label for="new-pass">كلمة السرّ (8 أحرف على الأقلّ)</label>
+    <input id="new-pass" type="password" autocomplete="new-password">
+    <label for="new-pass-2">أعد كتابتها</label>
+    <input id="new-pass-2" type="password" autocomplete="new-password">
+    <button id="do-setup" class="primary">احفظ المفتاح مشفَّراً</button>
+    <p id="setup-status" class="status" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- 2) مقفل: كلمةُ السرّ تفتحه -->
+  <section id="locked" class="card" hidden>
+    <h2>افتح القفل</h2>
+    <label for="pass">كلمة السرّ</label>
+    <input id="pass" type="password" autocomplete="current-password">
+    <button id="do-unlock" class="primary">افتح</button>
+    <p id="unlock-status" class="status" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- 3) مفتوح: توليدُ المفاتيح والرموز -->
+  <section id="work" hidden>
+    <div class="tabs" role="tablist">
+      <button id="tab-license" role="tab" aria-selected="true">مفتاح تفعيل</button>
+      <button id="tab-reset" role="tab" aria-selected="false">رمز كلمة المرور</button>
+    </div>
+
+    <div class="card">
+      <label for="fp">بصمة جهاز الأستاذ</label>
+      <input id="fp" class="ltr" type="text" inputmode="text" autocapitalize="characters"
+             autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX">
+      <p class="hint">يمكنك لصقُ رسالة الأستاذ كاملةً، فتُلتقَط البصمةُ منها.</p>
+
+      <div id="license-only">
+        <label>المدّة</label>
+        <div class="choices" role="group" aria-label="المدّة">
+          <button type="button" data-years="1" aria-pressed="true">سنة</button>
+          <button type="button" data-years="2" aria-pressed="false">سنتان</button>
+          <button type="button" data-years="3" aria-pressed="false">ثلاث سنوات</button>
+          <button type="button" data-years="date" aria-pressed="false">تاريخٌ محدّد</button>
+        </div>
+        <div id="date-box" hidden>
+          <label for="expiry">ينتهي في</label>
+          <input id="expiry" type="date">
+        </div>
+      </div>
+      <p id="reset-only" class="hint" hidden>رمزٌ لمرّةٍ واحدة، صالحٌ 7 أيّام، لمن نسي كلمةَ مروره ورمزَ الاسترجاع معاً.</p>
+
+      <button id="do-make" class="primary">ولّد المفتاح</button>
+      <p id="make-status" class="status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div id="result" class="card result" hidden>
+      <h2 id="result-title">مفتاح التفعيل</h2>
+      <div id="result-code" class="code ltr"></div>
+      <p id="result-until" class="hint"></p>
+      <div class="row">
+        <button id="do-copy" class="quiet">نسخ</button>
+        <button id="do-share" class="quiet">مشاركة</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="do-lock" class="quiet">قفل</button>
+      <button id="do-forget" class="danger">حذف المفتاح من الهاتف</button>
+    </div>
+  </section>
+
+  <p class="foot">لا يغادر هذا الهاتفَ شيء: الصفحةُ تعمل بلا إنترنت، ومفتاحُ التوقيع محفوظٌ فيها مشفَّراً بكلمة سرّك. وكلُّ مفتاحٍ يُتحقَّق منه قبل أن يُعرَض.</p>
+</main>
+
+<script src="engine.js"></script>
+<script>
+"use strict";
+(function () {
+  const S = window.RaqeemSigner;
+  const STORE = "rqm.sealed";
+  const IDLE_MS = 5 * 60 * 1000;
+  const $ = (id) => document.getElementById(id);
+
+  let seed = "";            // مفتوحٌ في الذاكرة وحدها، ويُمحى بالقفل
+  let mode = "license";
+  let years = "1";
+  let idle = 0;
+  let lastText = "";
+
+  function sealed() {
+    try { return JSON.parse(localStorage.getItem(STORE) || "null"); } catch (_e) { return null; }
+  }
+
+  function say(id, text, kind) {
+    const el = $(id);
+    el.textContent = text || "";
+    el.className = "status" + (kind ? " " + kind : "");
+  }
+
+  function show(state) {
+    $("setup").hidden = state !== "setup";
+    $("locked").hidden = state !== "locked";
+    $("work").hidden = state !== "work";
+    if (state === "locked") setTimeout(() => $("pass").focus(), 50);
+  }
+
+  function lock() {
+    seed = "";
+    $("result").hidden = true;
+    $("pass").value = "";
+    say("unlock-status", "");
+    show(sealed() ? "locked" : "setup");
+  }
+
+  function touch() {
+    clearTimeout(idle);
+    if (seed) idle = setTimeout(lock, IDLE_MS);
+  }
+
+  async function busy(button, label, job) {
+    const before = button.textContent;
+    button.disabled = true;
+    button.textContent = label;
+    try { return await job(); } finally { button.disabled = false; button.textContent = before; }
+  }
+
+  // ─── أوّلَ مرّة ─────────────────────────────────────────────────────
+  $("do-setup").addEventListener("click", () => busy($("do-setup"), "جارٍ الحفظ…", async () => {
+    const file = $("seed-file").files[0];
+    const pass = $("new-pass").value, again = $("new-pass-2").value;
+    if (!file) return say("setup-status", "اختر ملفَّ التوقيع أوّلاً.", "bad");
+    if (pass.length < 8) return say("setup-status", "كلمةُ السرّ 8 أحرف على الأقلّ.", "bad");
+    if (pass !== again) return say("setup-status", "كلمتا السرّ غيرُ متطابقتين.", "bad");
+    const found = await S.findSeed(await file.text());
+    if (!found) return say("setup-status", "هذا الملفّ لا يحوي مفتاحَ توقيع رقيم.", "bad");
+    localStorage.setItem(STORE, JSON.stringify(await S.seal(found, pass)));
+    try { if (navigator.storage && navigator.storage.persist) await navigator.storage.persist(); } catch (_e) { /* اختياريّ */ }
+    seed = found;
+    $("seed-file").value = ""; $("new-pass").value = ""; $("new-pass-2").value = "";
+    show("work");
+    say("make-status", "حُفظ المفتاح مشفَّراً. احذف الآن ملفَّ التوقيع من ذاكرة الهاتف.", "ok");
+    touch();
+  }));
+
+  // ─── القفل ──────────────────────────────────────────────────────────
+  async function unlock() {
+    const box = sealed();
+    if (!box) return lock();
+    try {
+      const opened = await S.unseal(box, $("pass").value);
+      if (S.bytesToHex(await S.publicFromSeed(S.hexToBytes(opened))) !== S.PUBLIC_KEY) throw new Error("key");
+      seed = opened;
+      $("pass").value = "";
+      say("unlock-status", "");
+      show("work");
+      touch();
+    } catch (_e) {
+      say("unlock-status", "كلمةُ السرّ غيرُ صحيحة.", "bad");
+    }
+  }
+  $("do-unlock").addEventListener("click", () => busy($("do-unlock"), "جارٍ الفتح…", unlock));
+  $("pass").addEventListener("keydown", (e) => { if (e.key === "Enter") $("do-unlock").click(); });
+  $("do-lock").addEventListener("click", lock);
+
+  $("do-forget").addEventListener("click", () => {
+    if (!confirm("سيُحذف مفتاحُ التوقيع من هذا الهاتف. تأكّد أنّ نسختَه الأصليّة على حاسوبك. متابعة؟")) return;
+    localStorage.removeItem(STORE);
+    lock();
+  });
+
+  // ─── الصفحتان والمدّة ───────────────────────────────────────────────
+  function setMode(next) {
+    mode = next;
+    $("tab-license").setAttribute("aria-selected", String(mode === "license"));
+    $("tab-reset").setAttribute("aria-selected", String(mode === "reset"));
+    $("license-only").hidden = mode !== "license";
+    $("reset-only").hidden = mode !== "reset";
+    $("do-make").textContent = mode === "license" ? "ولّد المفتاح" : "ولّد رمز الإعادة";
+    $("result").hidden = true;
+    say("make-status", "");
+  }
+  $("tab-license").addEventListener("click", () => setMode("license"));
+  $("tab-reset").addEventListener("click", () => setMode("reset"));
+
+  document.querySelectorAll(".choices button").forEach((b) => b.addEventListener("click", () => {
+    years = b.dataset.years;
+    document.querySelectorAll(".choices button").forEach((o) => o.setAttribute("aria-pressed", String(o === b)));
+    $("date-box").hidden = years !== "date";
+    if (years === "date" && !$("expiry").value) $("expiry").value = S.ymdText(S.addYears(S.today(), 1));
+  }));
+
+  $("fp").addEventListener("input", () => {
+    const found = S.findFingerprint($("fp").value);
+    if (found && S.normFp($("fp").value) !== S.normFp(found)) $("fp").value = found;
+  });
+
+  // ─── التوليد: ثمّ تحقّقٌ قبل العرض ──────────────────────────────────
+  $("do-make").addEventListener("click", () => busy($("do-make"), "جارٍ التوليد…", async () => {
+    touch();
+    if (!seed) return lock();
+    const fp = S.findFingerprint($("fp").value) || $("fp").value;
+    if (!S.isFingerprint(fp)) {
+      return say("make-status", "البصمةُ 16 حرفاً: أرقامٌ وحروفٌ من A إلى F — تأكّد من نسخها كاملة.", "bad");
+    }
+    $("fp").value = S.findFingerprint(fp);
+    $("result").hidden = true;
+    let code, until;
+    if (mode === "license") {
+      let when = { years: Number(years) };
+      if (years === "date") {
+        const picked = S.parseYmd($("expiry").value);
+        if (!picked || !S.before(S.today(), picked)) {
+          return say("make-status", "اختر تاريخَ انتهاءٍ بعد اليوم.", "bad");
+        }
+        when = { expiry: S.ymdText(picked) };
+      }
+      const made = await S.makeLicense(seed, fp, when);
+      const back = await S.verifyLicense(made.key, fp);
+      if (!back || back.expiry !== made.expiry) {
+        return say("make-status", "تعذّر التحقّق من المفتاح — لم يُعرَض. أعد المحاولة.", "bad");
+      }
+      code = made.key; until = made.expiry;
+      $("result-title").textContent = "مفتاح التفعيل";
+      lastText = `مفتاح تفعيل رقيم:\n${code}\nصالحٌ حتّى ${until}.\nالصقه في نافذة التفعيل في رقيم.`;
+    } else {
+      const made = await S.makeReset(seed, fp);
+      if (!(await S.verifyReset(made.token, fp))) {
+        return say("make-status", "تعذّر التحقّق من الرمز — لم يُعرَض. أعد المحاولة.", "bad");
+      }
+      code = made.token; until = made.expiry;
+      $("result-title").textContent = "رمز إعادة كلمة المرور";
+      lastText = `رمز إعادة كلمة المرور في رقيم:\n${code}\nصالحٌ حتّى ${until}، ولمرّةٍ واحدة.`;
+    }
+    $("result-code").textContent = code;
+    $("result-until").textContent = `صالحٌ حتّى ${until} — وتحقّقتُ منه بمفتاح رقيم العامّ.`;
+    $("result").hidden = false;
+    say("make-status", "");
+  }));
+
+  $("do-copy").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText($("result-code").textContent);
+      say("make-status", "نُسخ.", "ok");
+    } catch (_e) {
+      say("make-status", "تعذّر النسخ — اضغط على المفتاح مطوّلاً وانسخه.", "bad");
+    }
+  });
+
+  $("do-share").addEventListener("click", async () => {
+    if (!navigator.share) return $("do-copy").click();
+    try { await navigator.share({ text: lastText }); } catch (_e) { /* أُغلقت نافذةُ المشاركة */ }
+  });
+
+  ["click", "keydown", "touchstart"].forEach((t) => document.addEventListener(t, touch, { passive: true }));
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* بلا عاملٍ خلفيّ تعمل الصفحةُ وهي متّصلةٌ فقط */ });
+  }
+
+  lock();
+})();
+</script>
+</body>
+</html>
